@@ -1,0 +1,7 @@
+bootloader/build/
+app/build/
+bootloader/.settings/
+doom1.wad
+*.elf
+*.bin
+*.map

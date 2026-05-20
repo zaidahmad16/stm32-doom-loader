@@ -1,0 +1,3 @@
+/home/zaid/stm32-doom-loader-app/build/CMakeFiles/stm32-doom-app.elf.dir
+/home/zaid/stm32-doom-loader-app/build/CMakeFiles/edit_cache.dir
+/home/zaid/stm32-doom-loader-app/build/CMakeFiles/rebuild_cache.dir

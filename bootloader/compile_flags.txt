@@ -1,0 +1,4 @@
+-DSTM32F401xE
+-I/home/zaid/stm32-doom/bootloader/Inc
+-mcpu=cortex-m4
+-mthumb

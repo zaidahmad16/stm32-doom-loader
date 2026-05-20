@@ -1,25 +1,18 @@
 {
     "configurations": [
         {
-            "name": "STM32",
+            "name": "Linux",
             "includePath": [
                 "/home/zaid/stm32-doom/bootloader/Inc/**"
             ],
             "defines": [
                 "STM32F401xE",
-                "STM32F4",
                 "__FPU_PRESENT=1",
                 "__MPU_PRESENT=1"
             ],
             "compilerPath": "/usr/bin/arm-none-eabi-gcc",
             "cStandard": "c11",
-            "intelliSenseMode": "gcc-arm",
-            "browse": {
-                "path": [
-                    "/home/zaid/stm32-doom/bootloader/Inc"
-                ],
-                "limitSymbolsToIncludedHeaders": true
-            }
+            "intelliSenseMode": "gcc-arm"
         }
     ],
     "version": 4

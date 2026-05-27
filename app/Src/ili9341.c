@@ -19,27 +19,26 @@
 
 /* simple delay loop */
 static void delay(uint32_t ms) {
-    for (volatile uint32_t i = 0; i < ms * 4000; i++);
+    for (volatile uint32_t i = 0; i < ms * 16000; i++);
 }
 
 /* send a command byte to the display */
 static void sendCommand(uint8_t cmd) {
-    DC_LOW();    /* tell display this is a command */
-    CS_LOW();    /* select display */
+    DC_LOW();
+    CS_LOW();
     spiSendByte(cmd);
-    CS_HIGH();   /* deselect display */
+    CS_HIGH();
 }
 
 /* send a data byte to the display */
 static void sendData(uint8_t data) {
-    DC_HIGH();   /* tell display this is data */
-    CS_LOW();    /* select display */
+    DC_HIGH();
+    CS_LOW();
     spiSendByte(data);
-    CS_HIGH();   /* deselect display */
+    CS_HIGH();
 }
 
 void ili9341Init(void) {
-
     /* enable GPIOC clock for DC pin */
     RCC->AHB1ENR |= RCC_AHB1ENR_GPIOCEN;
 
@@ -53,16 +52,16 @@ void ili9341Init(void) {
     RESET_HIGH();
     delay(10);
     RESET_LOW();
-    delay(10);
+    delay(20);
     RESET_HIGH();
-    delay(120);
+    delay(150);
 
     /* initialize display registers */
     sendCommand(0x01);  /* software reset */
-    delay(120);
+    delay(150);
 
     sendCommand(0x11);  /* sleep out */
-    delay(120);
+    delay(150);
 
     sendCommand(0x3A);  /* pixel format */
     sendData(0x55);     /* 16 bit RGB565 */
@@ -74,21 +73,21 @@ void ili9341Init(void) {
     delay(10);
 }
 
-/* set the drawing window - tells display where to draw next */
+/* set the drawing window */
 static void setWindow(uint16_t x0, uint16_t y0, uint16_t x1, uint16_t y1) {
-    sendCommand(0x2A);          /* column address set */
+    sendCommand(0x2A);
     sendData(x0 >> 8);
     sendData(x0 & 0xFF);
     sendData(x1 >> 8);
     sendData(x1 & 0xFF);
 
-    sendCommand(0x2B);          /* row address set */
+    sendCommand(0x2B);
     sendData(y0 >> 8);
     sendData(y0 & 0xFF);
     sendData(y1 >> 8);
     sendData(y1 & 0xFF);
 
-    sendCommand(0x2C);          /* write to RAM */
+    sendCommand(0x2C);
 }
 
 void ili9341FillScreen(uint16_t color) {
@@ -100,7 +99,6 @@ void ili9341FillScreen(uint16_t color) {
     DC_HIGH();
     CS_LOW();
 
-    /* send color for every pixel */
     for (uint32_t i = 0; i < ILI9341_WIDTH * ILI9341_HEIGHT; i++) {
         spiSendByte(hi);
         spiSendByte(lo);

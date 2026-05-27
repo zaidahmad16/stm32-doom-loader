@@ -1,7 +1,6 @@
 #include "spi.h"
 
 void spiInit(void) {
-
     /* enable clocks for SPI1, GPIOA and GPIOB */
     RCC->APB2ENR |= RCC_APB2ENR_SPI1EN;
     RCC->AHB1ENR |= RCC_AHB1ENR_GPIOAEN;
@@ -21,19 +20,19 @@ void spiInit(void) {
 
     /* configure SPI1:
        MSTR = 1    - STM32 is the master
-       BR   = 010  - clock divider /8, gives us 10.5 MHz
+       BR   = 011  - clock divider /16, slower and more reliable for init
        SSM  = 1    - software slave management
        SSI  = 1    - internal slave select high
        SPE  = 1    - enable SPI */
     SPI1->CR1 = SPI_CR1_MSTR |
                 SPI_CR1_BR_1 |
+                SPI_CR1_BR_0 |
                 SPI_CR1_SSM  |
                 SPI_CR1_SSI  |
                 SPI_CR1_SPE;
 }
 
 void spiSendByte(uint8_t byte) {
-
     /* wait until transmit buffer is empty */
     while (!(SPI1->SR & SPI_SR_TXE));
 
